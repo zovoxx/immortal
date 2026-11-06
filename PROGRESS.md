@@ -10,7 +10,7 @@ Engine: Godot 4.7.2 stable (Linux x86_64), Jolt Physics.
 - [x] Phase 5 — Enemies part 2 and combat
 - [x] Phase 6 — Weather and day/night
 - [x] Phase 7 — Biomes and difficulty
-- [ ] Phase 8 — Stations, upgrades, momentum, Message
+- [x] Phase 8 — Stations, upgrades, momentum, Message
 - [ ] Phase 9 — UI, audio, settings, save, polish
 - [ ] Phase 10 — Debug tools, balancing, export
 
@@ -56,3 +56,9 @@ Engine: Godot 4.7.2 stable (Linux x86_64), Jolt Physics.
   - Greywood Forest (streams with flash floods, hounds), Ruined Highway (cars to vault, overpass climb, tunnel shelter, watchtower slots), Storm Plains (open ground for riders, lone trees/hedges that crash them, windmill lightning rod, 2.6x storms, creek floods), Floating Ruins (platforms over a void with a kill volume, wall-run gap, spire climb, ambient wind gusts), Salt Desert (white glare x1.8, dust storms, extra scavengers, a single shelter type).
 - Difficulty (`world/zone_gen/difficulty_curves.tres`): enemy groups, HP, damage, storm chance, toll price rise with zone; loot falls. Long Road +N every 50 zones adds per-loop terms (shown on the HUD).
 - Enemies never walk off ledges; anything falling into the void dies.
+
+### Phase 8 — Stations, upgrades, momentum, Message (done)
+- `ui/station_menu.gd`: Rest (full heal, +~3 in-game hours, storm may move in, autosave), Stash (6 shared slots, put/take via the loot window), Upgrade bench (Bed per station +20 HP, Forge global Fine Blade, Kennel global one noise-maker per life, Signal Mirror per station forecast). Materials come from caches, toll-keepers, scavengers; spent from pouch first, then stash.
+- Momentum: +1 per station reached without dying (max 5): 2 = +5% speed, 3 = better loot, 5 = Fast Courier (hidden shortcuts revealed, par-time material bonus). Death resets it.
+- The Message: 8 fragments (`world/message_fragments.gd`), Seal Breaks card every 25 relays, Message page in the menus.
+- Tests: save/load full round-trip (zone, lineage, corpses, stash, upgrades, tolls, caches, fragments), upgrades/kennel, momentum, fragments, stash persistence, station menu smoke.

@@ -398,8 +398,17 @@ func from_dict(d: Dictionary) -> void:
 	var cd: Dictionary = d.get("courier", {})
 	courier = CourierData.from_dict(cd) if not cd.is_empty() else null
 	courier_counter = int(d.get("courier_counter", 1))
-	fallen = d.get("fallen", [])
-	first_name_counts = d.get("first_name_counts", {})
+	fallen = []
+	for f in d.get("fallen", []):
+		var e: Dictionary = f.duplicate()
+		e["index"] = int(e.get("index", 0))
+		e["zone"] = int(e.get("zone", 0))
+		e["lived"] = float(e.get("lived", 0.0))
+		fallen.append(e)
+	first_name_counts = {}
+	var fnc: Dictionary = d.get("first_name_counts", {})
+	for k in fnc:
+		first_name_counts[String(k)] = int(fnc[k])
 	corpses.clear()
 	for c in d.get("corpses", []):
 		corpses.append(CorpseData.from_dict(c))

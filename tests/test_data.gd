@@ -116,3 +116,113 @@ func test_station_activation_and_momentum() -> void:
 	eq(Game.last_station, 3, "respawn stays at the furthest station")
 	Game.handle_death("test", 3, Vector3.ZERO)
 	eq(Game.momentum, 0, "death resets momentum")
+
+
+func test_save_load_roundtrip() -> void:
+	Game.new_road(4321)
+	Game.courier.inventory.add("scrap", 7)
+	Game.activate_station(1)
+	Game.activate_station(2)
+	Game.current_zone = 2
+	Game.highest_zone = 2
+	Game.handle_death("eaten by the test", 2, Vector3(3, 1, 40))
+	Game.respawn()
+	Game.handle_death("second death", 1, Vector3(-2, 0, 10))
+	Game.respawn()
+	Game.stash.add("bandage", 2)
+	Game.stash.add("oil", 3)
+	Game.global_upgrades.append("forge")
+	Game.station_upgrades["2"] = ["bed"]
+	Game.fragments = [0]
+	Game.mark_toll_paid(2, "toll_5")
+	Game.mark_cache_looted(2, "cache_0")
+	Game.current_zone = 2
+	var before := Game.to_dict()
+	check(Save.save_game(), "save written")
+	Game.new_road(1)
+	check(Game.world_seed != 4321, "state cleared")
+	check(Save.load_game(), "save loaded")
+	eq(Game.world_seed, 4321, "seed restored")
+	eq(Game.current_zone, 2, "zone index restored")
+	eq(Game.last_station, 2, "last station restored")
+	eq(Game.courier_counter, 3, "lineage counter restored")
+	eq(Game.fallen.size(), 2, "Roll of the Fallen restored")
+	eq(String(Game.fallen[0].cause), "eaten by the test", "fallen entry restored")
+	eq(Game.corpses.size(), 2, "corpses restored")
+	eq(Game.corpses[0].local_pos, Vector3(3, 1, 40), "corpse position restored")
+	check(Game.corpses[0].inventory.has("scrap"), "corpse items restored")
+	eq(Game.stash.count_of("bandage"), 2, "stash restored")
+	eq(Game.stash.count_of("oil"), 3, "stash materials restored")
+	check(Game.has_upgrade("forge") and Game.has_upgrade("bed", 2) and not Game.has_upgrade("bed", 1), "upgrades restored (global + per station)")
+	eq(Game.fragments, [0] as Array[int], "fragments restored")
+	check(Game.is_toll_paid(2, "toll_5") and Game.is_cache_looted(2, "cache_0"), "tolls & caches restored")
+	eq(Game.courier.index, 3, "current courier restored")
+	check(JSON.stringify(Game.to_dict()) == JSON.stringify(before), "full state round-trips identically")
+	Save.delete_save()
+
+
+func test_upgrades_and_kennel() -> void:
+	Game.new_road(11)
+	check(not Game.build_upgrade("bed", 3), "can't build without materials")
+	Game.courier.inventory.add("cloth", 3, true)
+	Game.stash.add("scrap", 6)
+	check(Game.build_upgrade("bed", 3), "bed built at station 3 (pouch + stash materials)")
+	eq(Game.courier.inventory.count_of("cloth"), 0, "cloth spent")
+	Game.courier.inventory.add("oil", 2, true)
+	check(Game.build_upgrade("forge", 3), "forge built")
+	check(Game.has_upgrade("forge", 99), "forge is global")
+	check(Game.has_upgrade("bed", 3) and not Game.has_upgrade("bed", 4), "bed is per station")
+	var base := CourierData.new()
+	var c3 := Game.create_new_courier(3)
+	var c4 := Game.create_new_courier(4)
+	base.traits = c3.traits
+	base.apply_base_stats(100.0, 4)
+	check(is_equal_approx(c3.max_hp, base.max_hp + 20.0), "Bed: +20 HP when spawning at station 3")
+	check(c4.inventory.has("fine_blade") and not c4.inventory.has("short_blade"), "Forge: better blade")
+
+
+func test_momentum_effects_and_fragments() -> void:
+	Game.new_road(12)
+	Game.courier.traits.clear()
+	check(is_equal_approx(Game.momentum_speed_mult(), 1.0), "no bonus at 0")
+	Game.set_momentum(2)
+	check(is_equal_approx(Game.momentum_speed_mult(), 1.05), "momentum 2: +5% speed")
+	var l2 := Game.loot_luck()
+	Game.set_momentum(3)
+	check(Game.loot_luck() > l2, "momentum 3: better loot")
+	check(not Game.reveals_hidden_paths(), "no shortcuts below 5")
+	Game.set_momentum(5)
+	check(Game.reveals_hidden_paths(), "momentum 5: Fast Courier reveals shortcuts")
+	Game.set_momentum(9)
+	eq(Game.momentum, 5, "momentum caps at 5")
+	# fragments every 25 zones
+	Game.new_road(13)
+	var got: Array = []
+	var cb := func(i): got.append(i)
+	Events.message_fragment_revealed.connect(cb)
+	for s in range(1, 52):
+		Game.activate_station(s)
+	Events.message_fragment_revealed.disconnect(cb)
+	eq(got, [0, 1], "Seal Breaks at relays 25 and 50")
+	eq(MessageFragments.TEXT.size(), 8, "8 fragments written")
+	# fast courier time bonus
+	Game.new_road(14)
+	Game.set_momentum(4)
+	Game.zone_enter_time = Game.play_time
+	var mats_before := 0
+	for m in ItemDB.MATERIALS:
+		mats_before += Game.courier.inventory.count_of(m)
+	Game.activate_station(1)
+	var mats_after := 0
+	for m in ItemDB.MATERIALS:
+		mats_after += Game.courier.inventory.count_of(m)
+	check(Game.momentum == 5 and mats_after > mats_before, "Fast Courier: station-to-station time bonus")
+
+
+func test_stash_shared_between_couriers() -> void:
+	Game.new_road(15)
+	Game.stash.add("bandage", 1)
+	Game.handle_death("x", 0, Vector3.ZERO)
+	Game.respawn()
+	eq(Game.stash.count_of("bandage"), 1, "stash survives death")
+	eq(Game.stash.capacity, 6, "stash has 6 slots")

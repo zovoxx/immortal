@@ -38,6 +38,8 @@ func _ready() -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	add_child(preload("res://ui/pause_menu.tscn").instantiate())
 	add_child(preload("res://ui/loot_window.tscn").instantiate())
+	add_child(preload("res://ui/station_menu.tscn").instantiate())
+	add_child(preload("res://ui/message_popup.tscn").instantiate())
 	var flow := DeathFlow.new()
 	flow.world = self
 	add_child(flow)

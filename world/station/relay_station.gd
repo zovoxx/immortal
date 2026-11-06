@@ -91,6 +91,13 @@ func _process(_delta: float) -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if body is Courier and not (body as Courier).is_dead():
 		activate()
+		var hud := get_tree().get_first_node_in_group("hud")
+		if hud and Game.has_upgrade("mirror", station_index):
+			var w := get_tree().get_first_node_in_group("weather")
+			if w and w.has_method("forecast"):
+				hud.set_forecast("Signal Mirror: Zone %d — %s" % [station_index + 1, w.forecast(station_index)])
+		elif hud:
+			hud.set_forecast("")
 
 
 func activate() -> void:

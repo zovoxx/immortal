@@ -73,3 +73,31 @@ func test_smoke_game_world() -> void:
 	Game.new_road(4242)
 	var errs := await _run_scene("res://world/game_world.tscn", 600, true)
 	check(errs.is_empty(), "game world produced errors: %s" % str(errs.slice(0, 5)))
+
+
+func test_station_menu_rest_and_stash() -> void:
+	Game.new_road(77)
+	var scene: Node = load("res://world/test_course.tscn").instantiate()
+	runner.root.add_child(scene)
+	runner.current_scene = scene
+	await frames(5)
+	Game.courier.hp = 10.0
+	var menu: Node = runner.get_first_node_in_group("station_menu")
+	check(menu != null, "station menu exists")
+	scene.station.open_menu("rest")
+	await frames(2)
+	check(menu.visible_modal, "menu opens")
+	menu.rest()
+	eq(Game.courier.hp, Game.courier.max_hp, "rest heals fully")
+	menu.close_modal()
+	Game.global_upgrades.append("kennel")
+	Game.courier.inventory.add("feathers", 2, true)
+	Game.courier.inventory.remove_id("sling_stones", 3)
+	menu.buy_noise_maker()
+	check(Game.courier.inventory.has("noise_maker") and Game.courier.kennel_used, "kennel noise-maker bought")
+	menu.buy_noise_maker()
+	eq(Game.courier.inventory.count_of("noise_maker"), 1, "only one per life")
+	menu.close_modal()
+	scene.queue_free()
+	runner.current_scene = null
+	await frames(3)

@@ -10,6 +10,8 @@ var _layers: Dictionary = {}
 func _ready() -> void:
 	add_to_group("hidden_path")
 	set_revealed(Game.reveals_hidden_paths())
+	Events.momentum_changed.connect(func(_v): set_revealed(Game.reveals_hidden_paths()))
+	Events.courier_spawned.connect(func(_c): set_revealed(Game.reveals_hidden_paths()))
 
 
 func set_revealed(on: bool) -> void:
