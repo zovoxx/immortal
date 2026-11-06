@@ -24,6 +24,10 @@ extends Resource
 @export_group("Generation")
 ## Module scenes for this biome (each root has ZoneModule).
 @export var modules: Array[String] = []
+## The relay station module used at zone ends (and the road's start).
+@export var station_module: String = ""
+## Ground plane colour/height under the zone (hides gaps; none for void biomes).
+@export var underlay: bool = true
 ## Edge blocking style: "cliff", "barrier", "ridge", "void", "dune"
 @export var edge_style: String = "cliff"
 ## Enemy type -> relative weight for generic encounters ("hound", "scavenger", "rider", "watchtower", "tollkeeper").

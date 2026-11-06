@@ -67,3 +67,9 @@ func test_death_flow_spawns_corpse_and_respawns() -> void:
 	scene.queue_free()
 	runner.current_scene = null
 	await frames(3)
+
+
+func test_smoke_game_world() -> void:
+	Game.new_road(4242)
+	var errs := await _run_scene("res://world/game_world.tscn", 600, true)
+	check(errs.is_empty(), "game world produced errors: %s" % str(errs.slice(0, 5)))

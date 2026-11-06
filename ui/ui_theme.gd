@@ -66,12 +66,13 @@ static func title(text: String, size: int = 40) -> Label:
 	return l
 
 
-static func label(text: String, size: int = 20, color: Color = INK) -> Label:
+static func label(text: String, size: int = 20, color: Color = INK, wrap: bool = false) -> Label:
 	var l := Label.new()
 	l.text = text
 	l.add_theme_font_size_override("font_size", size)
 	l.add_theme_color_override("font_color", color)
-	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	if wrap:
+		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	return l
 
 

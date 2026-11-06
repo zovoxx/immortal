@@ -21,7 +21,7 @@ func _on_alert(pos: Vector3, kind: String) -> void:
 	match kind:
 		"howl": l = "~"
 		"bell": l = "B"
-		"lightning": l = "⚡"; c = Color(0.7, 0.8, 1.0)
+		"lightning": l = "*"; c = Color(0.7, 0.8, 1.0)
 		"sound": l = "?"; c = UITheme.DIM
 	alerts.append({"pos": pos, "label": l, "color": c, "time": 4.0})
 
@@ -75,7 +75,8 @@ func _draw() -> void:
 		var col: Color = t.color
 		if absf(a) > SPAN * 0.5:
 			col.a = 0.5
-		draw_string(font, Vector2(x - 7, 22), t.label, HORIZONTAL_ALIGNMENT_LEFT, -1, 20, col)
+		var tw := font.get_string_size(t.label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18).x
+		draw_string(font, Vector2(x - tw * 0.5, 22), t.label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, col)
 		if t.has("dist") and t.dist:
 			var dist := int(courier.global_position.distance_to(t.pos))
 			draw_string(font, Vector2(x - 12, 35), "%dm" % dist, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, col)

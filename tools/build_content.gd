@@ -38,4 +38,5 @@ static func save_scene(root: Node, path: String) -> bool:
 static func _set_owner_recursive(n: Node, owner: Node) -> void:
 	for c in n.get_children():
 		c.owner = owner
-		_set_owner_recursive(c, owner)
+		if c.scene_file_path == "":
+			_set_owner_recursive(c, owner)

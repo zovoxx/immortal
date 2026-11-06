@@ -84,7 +84,7 @@ func respawn_courier() -> void:
 
 
 func compass_targets() -> Array:
-	return [{"pos": Vector3(0, 0, 60), "label": "▲", "color": UITheme.ACCENT, "dist": true}]
+	return [{"pos": Vector3(0, 0, 60), "label": "[R]", "color": UITheme.ACCENT, "dist": true}]
 
 
 func _build_environment() -> void:
@@ -143,7 +143,7 @@ func _build_course() -> void:
 	# shimmy ledge: long wall, pull up only at the far end
 	Geo.box(g, Vector3(30, 1.6, 24), Vector3(10, 3.2, 1.0), C_CLIMB, ["climbable"])
 	Geo.box(g, Vector3(28, 3.7, 24), Vector3(6, 1.0, 1.0), C_CLIMB)
-	Geo.label(g, Vector3(30, 4.8, 24), "shimmy →", 40)
+	Geo.label(g, Vector3(30, 4.8, 24), "shimmy ->", 40)
 	# stacked tower 3.4 / 6.6 / 9.8
 	for i in 3:
 		var top := 3.4 + i * 3.2

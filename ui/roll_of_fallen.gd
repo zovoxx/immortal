@@ -27,7 +27,7 @@ func _ready() -> void:
 		row.add_child(UITheme.label("Courier #%d  —  %s" % [int(f.get("index", 0)), f.get("name", "?")], 22, UITheme.ACCENT))
 		row.add_child(UITheme.label("%s   ·   reached Zone %d   ·   %s   ·   lived %s" % [
 			", ".join(traits) if not traits.is_empty() else "no traits", int(f.get("zone", 0)) + 1,
-			f.get("cause", "unknown"), _fmt(float(f.get("lived", 0.0)))], 17, UITheme.INK))
+			f.get("cause", "unknown"), _fmt(float(f.get("lived", 0.0)))], 17, UITheme.INK, true))
 		list.add_child(row)
 		list.add_child(HSeparator.new())
 	var b := UITheme.button("Close", queue_free)

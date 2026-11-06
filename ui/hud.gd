@@ -47,7 +47,7 @@ func _ready() -> void:
 	Events.zone_entered.connect(func(_z): _refresh_zone())
 	Events.notify.connect(notify)
 	Events.courier_damaged.connect(func(a, _c): _flash_alpha = clampf(a / 50.0, 0.2, 0.6))
-	Events.storm_started.connect(func(k): _storm_icon.visible = true; _storm_icon.text = "⚠ DUST STORM" if k == "dust" else "⚠ STORM")
+	Events.storm_started.connect(func(k): _storm_icon.visible = true; _storm_icon.text = "! DUST STORM" if k == "dust" else "! STORM")
 	Events.storm_ended.connect(func(): _storm_icon.visible = false)
 	Events.lightning_warning.connect(func(_p): _storm_icon.modulate = Color(2, 2, 2))
 	_refresh_zone()
@@ -85,7 +85,7 @@ func _build() -> void:
 	_momentum_box = HBoxContainer.new()
 	_momentum_box.add_theme_constant_override("separation", 6)
 	tl.add_child(_momentum_box)
-	_storm_icon = UITheme.label("⚠ STORM", 20, Color(0.6, 0.75, 1.0))
+	_storm_icon = UITheme.label("! STORM", 20, Color(0.6, 0.75, 1.0))
 	_storm_icon.visible = false
 	tl.add_child(_storm_icon)
 	_forecast_label = UITheme.label("", 15, UITheme.DIM)

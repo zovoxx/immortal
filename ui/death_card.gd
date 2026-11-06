@@ -35,7 +35,8 @@ func _ready() -> void:
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_text.custom_minimum_size = Vector2(1000, 0)
 	_card.add_child(_text)
-	_sub = UITheme.label("", 20, UITheme.DIM)
+	_sub = UITheme.label("", 20, UITheme.DIM, true)
+	_sub.custom_minimum_size = Vector2(900, 0)
 	_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_card.add_child(_sub)
 	_card.modulate.a = 0.0
