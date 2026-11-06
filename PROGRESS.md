@@ -7,7 +7,7 @@ Engine: Godot 4.7.2 stable (Linux x86_64), Jolt Physics.
 - [x] Phase 2 — Death, respawn and corpses
 - [x] Phase 3 — Zone generation
 - [x] Phase 4 — Enemies part 1
-- [ ] Phase 5 — Enemies part 2 and combat
+- [x] Phase 5 — Enemies part 2 and combat
 - [ ] Phase 6 — Weather and day/night
 - [ ] Phase 7 — Biomes and difficulty
 - [ ] Phase 8 — Stations, upgrades, momentum, Message
@@ -40,3 +40,8 @@ Engine: Godot 4.7.2 stable (Linux x86_64), Jolt Physics.
 - Hounds: packs, howl alert, scent following point by point (water gaps break the trail), lunge attack, give up when the courier is up high.
 - Scavengers: go to the nearest corpse with loot, steal one item every 45 s, flee, fight when cornered, drop a sack with the stolen items.
 - `enemies/enemy_spawner.gd`: spawns layout encounters + corpse-drawn scavengers (also after a new death).
+
+### Phase 5 — Enemies part 2 and combat (done)
+- `player/courier_combat.gd`: blade light (tap) / charged (hold 0.65 s, staggers), best carried weapon auto-used (or the one chosen with Use), sling aim (RMB/LT, over-the-shoulder camera) + throw (LMB/RT) of the selected throwable or stones.
+- `items/projectile.gd` + effects: stones (damage, break lanterns, impact noise), noise-maker (loud rattles enemies investigate), smoke pot (blocks LOS), caltrops (slow + hurt hunters), fire pot (burst + burning ground).
+- Dodge roll with i-frames (Phase 1 movement). Toll-keeper: demands a toll that rises with zone, pay (least valuable items first, remembered per zone), sneak while it glances at the bridge, or fight its telegraphed slam. Watchtower: sweeping spotlight, 1 s exposure rings the bell (hunters within 60 m chase), sling stone darkens it 30 s. Rider: gallops on open ground, limited turn rate, predicts the courier's path, crashes (stunned) into trees/walls, pass-by strikes.

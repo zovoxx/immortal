@@ -11,6 +11,8 @@ enum State { MOVE, SLIDE, VAULT, HANG, CLIMB_UP, WALLRUN, ROLL, USING, DEAD }
 @onready var model: Node3D = $Model
 @onready var collision: CollisionShape3D = $CollisionShape3D
 @onready var camera_rig: CameraRig = $CameraRig
+@onready var combat: CourierCombat = get_node_or_null("Combat")
+@onready var actions: CourierActions = get_node_or_null("Actions")
 
 var state: State = State.MOVE
 var data: CourierData
@@ -738,6 +740,8 @@ func _update_visuals(delta: float) -> void:
 			pose = "crouch" if crouching else ("move" if is_on_floor() else "air")
 			if aiming:
 				pose = "aim"
+			elif combat and combat.is_swinging():
+				pose = "attack"
 		State.SLIDE: pose = "slide"
 		State.VAULT: pose = "vault"
 		State.HANG: pose = "hang"

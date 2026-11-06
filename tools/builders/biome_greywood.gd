@@ -167,7 +167,7 @@ func gorge_bridge(k: ModuleKit) -> ZoneModule:
 	k.hidden_marks(h, [Vector3(7, 0.4, 11), Vector3(7, 0.4, 29)])
 	k.tree(Vector3(-7, 0, 4), 1.0)
 	k.tree(Vector3(7.5, 0, 34), 1.1)
-	k.slot("Toll1", Vector3(0, 0, 9.5), PI)
+	k.slot("Toll1", Vector3(0, 0, 9.5), 0.0)
 	k.slot("Loot1", Vector3(-6.5, -9.0, 22))
 	k.slot("Enemy1", Vector3(5, 0, 34))
 	return m
