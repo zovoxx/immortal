@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://world/weather/storm_front.gd" id="1"]
+
+[node name="StormFront" type="Node3D"]
+script = ExtResource("1")

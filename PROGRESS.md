@@ -8,7 +8,7 @@ Engine: Godot 4.7.2 stable (Linux x86_64), Jolt Physics.
 - [x] Phase 3 — Zone generation
 - [x] Phase 4 — Enemies part 1
 - [x] Phase 5 — Enemies part 2 and combat
-- [ ] Phase 6 — Weather and day/night
+- [x] Phase 6 — Weather and day/night
 - [ ] Phase 7 — Biomes and difficulty
 - [ ] Phase 8 — Stations, upgrades, momentum, Message
 - [ ] Phase 9 — UI, audio, settings, save, polish
@@ -45,3 +45,8 @@ Engine: Godot 4.7.2 stable (Linux x86_64), Jolt Physics.
 - `player/courier_combat.gd`: blade light (tap) / charged (hold 0.65 s, staggers), best carried weapon auto-used (or the one chosen with Use), sling aim (RMB/LT, over-the-shoulder camera) + throw (LMB/RT) of the selected throwable or stones.
 - `items/projectile.gd` + effects: stones (damage, break lanterns, impact noise), noise-maker (loud rattles enemies investigate), smoke pot (blocks LOS), caltrops (slow + hurt hunters), fire pot (burst + burning ground).
 - Dodge roll with i-frames (Phase 1 movement). Toll-keeper: demands a toll that rises with zone, pay (least valuable items first, remembered per zone), sneak while it glances at the bridge, or fight its telegraphed slam. Watchtower: sweeping spotlight, 1 s exposure rings the bell (hunters within 60 m chase), sling stone darkens it 30 s. Rider: gallops on open ground, limited turn rate, predicts the courier's path, crashes (stunned) into trees/walls, pass-by strikes.
+
+### Phase 6 — Weather and day/night (done)
+- `world/weather/weather_manager.gd`: seeded storm roll per zone (Difficulty.storm_chance x biome), a storm front that starts ~70 m behind the courier and advances along the zone path (visible curtain `storm_front.tscn`), intensity by distance to the front, rain particles + low visibility, lightning on the highest exposed point near the courier with a 1.5 s flicker + crackle warning, wind gusts that push mid-air, flash floods (WaterVolumes rise) in flood biomes, dust storms (very low visibility, scent disabled). Shelters/stations block lightning and wind.
+- `world/environment_controller.gd`: biome palette blending, 12-minute day/night (sun/moon, sky, fog, ambient), storm/dust darkening, lightning flash, Night-eyed vision (clear nights, glare + blur by day).
+- Night: enemy sight x0.55, hound scent x1.5 (Perception).
