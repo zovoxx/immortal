@@ -194,3 +194,15 @@ func station() -> void:
 	st.position = Vector3(0, 0, 10)
 	m.add_child(st)
 	slot("Station", Vector3(0, 0, 10))
+
+
+## Optional intended main route (Marker3D list) used by tools/traverse_check.gd.
+func route(points: Array) -> void:
+	var r := Node3D.new()
+	r.name = "Route"
+	m.add_child(r)
+	for i in points.size():
+		var mk := Marker3D.new()
+		mk.name = "R%d" % i
+		mk.position = points[i]
+		r.add_child(mk)

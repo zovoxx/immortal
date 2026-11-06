@@ -1,4 +1,7 @@
 .godot/
-build/
+build/*
+!build/linux/
+build/linux/*
+!build/linux/relay.x86_64
 *.tmp
 export_credentials.cfg

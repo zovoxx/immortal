@@ -43,8 +43,8 @@ func steps(k: ModuleKit) -> ZoneModule:
 	plat(k, -5, 5, 0, 6)
 	var hs := [1.0, 2.0, 2.0, 1.0]
 	for i in 4:
-		plat(k, -1.8, 1.8, 8 + i * 5.0, 11 + i * 5.0, hs[i])
-	plat(k, -5, 5, 29, 40)
+		plat(k, -2.2, 2.2, 7.5 + i * 5.5, 11.5 + i * 5.5, hs[i])
+	plat(k, -5, 5, 29.5, 40)
 	pillar(k, Vector3(4, 0, 34), 4.0)
 	k.slot("Loot1", Vector3(-3, 0, 36))
 	k.slot("Enemy1", Vector3(2, 0, 37))
@@ -108,6 +108,7 @@ func wallrun_gap(k: ModuleKit) -> ZoneModule:
 	Geo.box(h, Vector3(0, -0.2, 17), Vector3(1.2, 0.3, 10.5), k.b.trunk_color, ["surface_wood"])
 	k.hidden_marks(h, [Vector3(0, 0.3, 11.5), Vector3(0, 0.3, 22.5)])
 	k.label(Vector3(-3.8, 6.8, 17), "wall-run")
+	k.route([Vector3(4, 0, 8), Vector3(4, 0, 15.5), Vector3(4, 0, 19.5), Vector3(4, 0, 24), Vector3(0, 0, 40)])
 	k.slot("Enemy1", Vector3(2, 0, 30))
 	k.slot("Loot1", Vector3(-4, 0, 36))
 	return m
@@ -132,12 +133,13 @@ func islands(k: ModuleKit) -> ZoneModule:
 	var m := k.begin("fr_islands", ["stealth", "path"], 1, S, 1.0)
 	plat(k, -3, 3, 0, 5)
 	plat(k, -5, 1, 7, 11)
-	plat(k, 0, 6, 12.8, 16.5)
+	plat(k, -1.5, 5, 12.6, 16.5)
 	plat(k, -3, 3, 18, 20)
 	k.grass(Vector3(-2, 0, 9), Vector2(5, 3.5), 14)
 	k.grass(Vector3(3, 0, 14.6), Vector2(5, 3.2), 14)
 	k.slot("Enemy1", Vector3(3, 0, 15))
 	k.slot("Loot1", Vector3(-4, 0, 9))
+	k.route([Vector3(0, 0, 4), Vector3(-1, 0, 9), Vector3(0.5, 0, 14), Vector3(0, 0, 17.5), Vector3(0, 0, 20)])
 	return m
 
 

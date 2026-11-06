@@ -172,3 +172,36 @@ func test_pause_menu_in_world() -> void:
 	world.queue_free()
 	runner.current_scene = null
 	await frames(3)
+
+
+func test_debug_cheats() -> void:
+	ZoneGenerator.clear_cache()
+	Game.new_road(64)
+	var world: GameWorld = load("res://world/game_world.tscn").instantiate()
+	runner.root.add_child(world)
+	runner.current_scene = world
+	await frames(5)
+	var dbg: Node = world.find_children("*", "CanvasLayer", false, false).filter(func(n): return n.has_method("teleport_to_zone"))[0]
+	Game.debug_overlay = true
+	dbg.teleport_to_zone(14)
+	await frames(10)
+	eq(Game.current_zone, 13, "teleport to zone 15 puts the courier at relay 14 (end of zone 14)")
+	check(world.streamer.loaded.has(14), "target zone loaded")
+	check(world.courier.global_position.length() < 120.0, "near the floating origin")
+	var before := runner.get_nodes_in_group("enemy").size()
+	dbg.spawn_enemy("hound")
+	await frames(2)
+	check(runner.get_nodes_in_group("enemy").size() >= before + 3, "F6 spawns a hound pack")
+	dbg.force_storm()
+	check(world.weather.active, "F7 forces a storm")
+	Game.god_mode = true
+	world.courier.take_damage(500.0, "test")
+	check(not world.courier.is_dead(), "god mode prevents death")
+	Game.god_mode = false
+	for i in 30:
+		await frames(1)
+	check(dbg._scent_mm != null and dbg._scent_mm.multimesh.visible_instance_count > 0, "scent points are drawn")
+	Game.debug_overlay = false
+	world.queue_free()
+	runner.current_scene = null
+	await frames(3)

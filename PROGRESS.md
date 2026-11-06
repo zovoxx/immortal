@@ -12,7 +12,7 @@ Engine: Godot 4.7.2 stable (Linux x86_64), Jolt Physics.
 - [x] Phase 7 — Biomes and difficulty
 - [x] Phase 8 — Stations, upgrades, momentum, Message
 - [ ] Phase 9 — UI, audio, settings, save, polish
-- [ ] Phase 10 — Debug tools, balancing, export
+- [x] Phase 10 — Debug tools, balancing, export
 
 ## Log
 
@@ -68,3 +68,13 @@ Engine: Godot 4.7.2 stable (Linux x86_64), Jolt Physics.
 - Menus: main (Continue/New Road/Roll/Message/Settings/Test Course/Quit), pause, death card, station, loot, message popup, Roll of the Fallen, the Message, settings (sensitivity, invert Y, FOV, Low/Medium/High, 3 volumes, fullscreen, rebinding KB+pad with reset).
 - Audio: all sounds procedurally generated (`autoload/audio.gd`), overridable by dropping files into `res://audio/sfx/`; Master/Music/SFX buses; wind loop rises with speed/storm, rain loop, music drone.
 - Save: JSON in user:// on station activation, death, rest, upgrades, pause->menu/quit and window close.
+
+### Phase 10 — Debug tools, balancing, export (done)
+- `ui/debug_overlay.gd` (F3): FPS/draw calls, seed, zone/biome/loop, time, weather, difficulty values, courier state, nearest enemy states (+ labels above enemies), scent points drawn as spheres sized by strength. Cheats: F5 god mode, F6 spawn enemy (cycles types), F7 force/clear storm, F8 teleport to zone N, F9 next zone.
+- Balancing: hound run 8.6 m/s (sprinting just outruns them), gusts 18, more forgiving Floating Ruins steps/islands.
+- `tools/traverse_check.gd`: a bot crosses all 51 modules of all biomes (51/51 pass). Modules may carry optional `Route` markers for it.
+- Linux export preset; `build/linux/relay.x86_64` exported (pck embedded) and smoke-run headless (`-- --new-road`, 900 frames, no errors).
+
+## Final state
+- 59/59 automated tests pass (`godot --headless --path . --script res://tests/run_tests.gd`).
+- No known blocking issues. See README "Known bugs / limitations".

@@ -37,3 +37,33 @@ Decisions made without asking, with the reasoning.
 - Scavenger theft only happens while the corpse's zone is loaded (no offline simulation). A scavenger alive when its zone unloads takes its loot with it.
 - A new scavenger is sent toward the newest corpse ~40 s after a respawn, so going back quickly pays off.
 - Enemies ignore a courier inside a relay station's area (stations are safe ground).
+
+## Weather
+- Storms are rolled per zone from its seed (a separate RNG stream, so weather tuning never changes layouts). The front starts ~70 m behind the courier and advances at 1.8 m/s — slower than running, faster than dawdling.
+- Lightning picks the highest exposed point among the courier's head and ~10 sampled ground/rooftop points within 16 m; anything with geometry above it or inside a shelter/station volume is not exposed. 65 damage in a 3.5 m radius after a 1.5 s flicker + crackle warning.
+- Flash floods raise the water volumes in the storm zone (Greywood streams, Plains creeks); dust storms replace rain in the Salt Desert.
+
+## Stations, upgrades, momentum
+- Upgrade costs live in `autoload/game_config.tres`. Bed and Signal Mirror are per station; Forge and Kennel are global (`GameConfig.global_upgrades`). Materials are spent from the courier's pouch first, then the shared stash.
+- One shared stash (6 slots) reachable from every station, persisting across couriers.
+- Fast Courier "station-to-station time bonus": reaching the next relay within the par time (150 s) at momentum 5 grants 2 random materials.
+- Message fragments unlock at relays 25, 50, … 200.
+
+## UI / audio / settings
+- Menus are built in code inside small `.tscn` shells (one script per screen) with a shared `UITheme`. Modal windows (loot, station) don't pause the game.
+- All audio is synthesised at startup; any file at `res://audio/sfx/<id>.ogg|wav|mp3` overrides it. Buses Master/Music/SFX are created at runtime.
+- Settings live in `user://relay_settings.json`; rebinding stores only changed actions.
+- Graphics Low = no shadows, no SSAO, no volumetric fog, no glow, 60 % render scale; Medium = shadows (60 m), 85 % scale; High = shadows (120 m), SSAO, volumetric fog, MSAA 2x.
+
+## Debug / export
+- Debug cheats are always available (they're on F-keys and harmless); `Game.god_mode` also blocks fall/void deaths.
+- Teleport (F8) moves the courier to the relay station at the start of the chosen zone and marks it as the checkpoint.
+- Release builds can't take a scene path on the command line, so the main menu accepts `-- --new-road`, `-- --continue` and `-- --test-course`.
+- The export embeds the .pck into `relay.x86_64` and excludes `tests/` and `tools/`.
+
+## Balancing pass
+- Hound run speed 8.6 m/s: a loaded courier (4/4 slots, -10 %) sprinting at 9.0 m/s barely outruns them; running (6.3 m/s) does not — so the answer to hounds is height, water, or stamina management.
+- Gusts were raised to 18 m/s² peak after testing (10 barely moved a jumping courier).
+- Early zones: 1 encounter group, 2-hound packs, ~10 % storm chance; difficulty ramps through the curves resource.
+- Modules can contain an optional `Route` node with Marker3D children describing the intended main line; only the traversal bot uses it.
+- The exported binary (`build/linux/relay.x86_64`, ~74 MB, pck embedded) is committed to git because the build machine is ephemeral and the binary was an explicit deliverable. Re-export with the command in the README.

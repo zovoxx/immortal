@@ -88,16 +88,20 @@ func _physics_process(delta: float) -> void:
 		env_ctrl.set_biome(BiomeDB.for_zone(z))
 		call_deferred("_after_zone_change", z)
 	elif courier.global_position.length() > rebase_distance:
-		call_deferred("_rebase", Game.current_zone)
+		call_deferred("_rebase")
 
 
 func _after_zone_change(z: int) -> void:
 	streamer.ensure(z)
-	_rebase(z)
+	_rebase()
 
 
-func _rebase(z: int) -> void:
-	var delta := streamer.set_origin(ZoneGenerator.start_cell(Game.world_seed, z))
+## Moves the floating origin to the courier's current grid cell.
+func _rebase() -> void:
+	if courier == null or not is_instance_valid(courier):
+		return
+	var local_cell := ZoneGenerator.cell_of(courier.global_position)
+	var delta := streamer.set_origin(streamer.origin_cell + local_cell)
 	if delta == Vector3.ZERO:
 		return
 	if is_instance_valid(courier):
@@ -132,7 +136,6 @@ func respawn_courier() -> void:
 	var zone := ZoneStreamer.station_zone(Game.last_station)
 	streamer.ensure(zone)
 	Game.current_zone = zone
-	_rebase(zone)
 	courier = COURIER_SCENE.instantiate()
 	courier.data = Game.courier
 	add_child(courier)
@@ -143,6 +146,7 @@ func respawn_courier() -> void:
 		courier.global_position = streamer.zone_offset(zone) + Vector3(0, 0.5, 4)
 	courier.rotation = Vector3.ZERO
 	courier.camera_rig.face_direction(Vector3.BACK)
+	_rebase()
 	env_ctrl.camera = courier.camera_rig.camera
 	env_ctrl.courier = courier
 

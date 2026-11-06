@@ -127,6 +127,7 @@ func hedgerows(k: ModuleKit) -> ZoneModule:
 	k.grass(Vector3(6, 0, 13), Vector2(5, 4), 14)
 	k.slot("Enemy1", Vector3(5, 0, 18))
 	k.slot("Loot1", Vector3(-8, 0, 18))
+	k.route([Vector3(-3, 0, 2), Vector3(-3, 0, 5.5), Vector3(3, 0, 8), Vector3(3, 0, 11.5), Vector3(-3, 0, 14), Vector3(-3, 0, 17.5), Vector3(0, 0, 20)])
 	return m
 
 

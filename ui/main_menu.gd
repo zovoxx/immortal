@@ -45,6 +45,14 @@ func _ready() -> void:
 	_vb.add_child(UITheme.button("Test Course", func(): get_tree().change_scene_to_file("res://world/test_course.tscn")))
 	_vb.add_child(UITheme.button("Quit", func(): get_tree().quit()))
 	(_vb.find_children("*", "Button", true, false)[0] as Button).grab_focus()
+	# command-line shortcuts (work in exported builds):  ./relay.x86_64 -- --new-road | --continue | --test-course
+	var args := OS.get_cmdline_user_args()
+	if args.has("--new-road"):
+		_new_road.call_deferred()
+	elif args.has("--continue") and Save.has_save():
+		_continue.call_deferred()
+	elif args.has("--test-course"):
+		get_tree().change_scene_to_file.call_deferred("res://world/test_course.tscn")
 
 
 func _continue() -> void:

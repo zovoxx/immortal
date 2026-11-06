@@ -29,7 +29,7 @@ var _sniff_timer: float = 0.0
 func _init() -> void:
 	max_hp = 30.0
 	walk_speed = 3.5
-	run_speed = 9.3
+	run_speed = 8.6
 	sight_range = 16.0
 	sight_angle_deg = 140.0
 	attack_range = 3.4

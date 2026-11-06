@@ -37,59 +37,59 @@ size = Vector3(0.12, 0.12, 0.9)
 [sub_resource type="BoxMesh" id="BoxMesh_m6qoe"]
 size = Vector3(0.12, 0.12, 0.9)
 
-[node name="SdStation" type="Node3D" unique_id=1350703813]
+[node name="SdStation" type="Node3D" unique_id=1922619287]
 script = ExtResource("1_6dgxo")
 module_id = "sd_station"
 tags = PackedStringArray("station")
 
-[node name="Entry" type="Marker3D" parent="." unique_id=41150614]
+[node name="Entry" type="Marker3D" parent="." unique_id=2047879816]
 
-[node name="Exit" type="Marker3D" parent="." unique_id=1207587137]
+[node name="Exit" type="Marker3D" parent="." unique_id=1730650661]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
 
-[node name="Geometry" type="Node3D" parent="." unique_id=662367397]
+[node name="Geometry" type="Node3D" parent="." unique_id=1172680782]
 
-[node name="@StaticBody3D@1816" type="StaticBody3D" parent="Geometry" unique_id=769013895]
+[node name="@StaticBody3D@1816" type="StaticBody3D" parent="Geometry" unique_id=208363309]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 10)
 collision_mask = 0
 
-[node name="@MeshInstance3D@1817" type="MeshInstance3D" parent="Geometry/@StaticBody3D@1816" unique_id=1143980958]
+[node name="@MeshInstance3D@1817" type="MeshInstance3D" parent="Geometry/@StaticBody3D@1816" unique_id=1099938280]
 material_override = SubResource("StandardMaterial3D_px5eg")
 mesh = SubResource("BoxMesh_fjqu8")
 
-[node name="@CollisionShape3D@1818" type="CollisionShape3D" parent="Geometry/@StaticBody3D@1816" unique_id=1397585248]
+[node name="@CollisionShape3D@1818" type="CollisionShape3D" parent="Geometry/@StaticBody3D@1816" unique_id=2020583886]
 shape = SubResource("BoxShape3D_scedu")
 
-[node name="@MeshInstance3D@1819" type="MeshInstance3D" parent="Geometry" unique_id=944400573]
+[node name="@MeshInstance3D@1819" type="MeshInstance3D" parent="Geometry" unique_id=54216194]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015, 10)
 material_override = SubResource("StandardMaterial3D_tqfbx")
 mesh = SubResource("BoxMesh_0gqnj")
 
-[node name="@MeshInstance3D@1820" type="MeshInstance3D" parent="Geometry" unique_id=935018410]
+[node name="@MeshInstance3D@1820" type="MeshInstance3D" parent="Geometry" unique_id=432349025]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6, 0.08, 6)
 material_override = SubResource("StandardMaterial3D_2g00n")
 mesh = SubResource("BoxMesh_cpxg4")
 
-[node name="@MeshInstance3D@1821" type="MeshInstance3D" parent="Geometry" unique_id=1484358412]
+[node name="@MeshInstance3D@1821" type="MeshInstance3D" parent="Geometry" unique_id=596224615]
 transform = Transform3D(0.87758255, 0, 0.47942555, 0, 1, 0, -0.47942555, 0, 0.87758255, -7.2, 0.08, 6.2524414)
 material_override = SubResource("StandardMaterial3D_2g00n")
 mesh = SubResource("BoxMesh_ocmbu")
 
-[node name="@MeshInstance3D@1822" type="MeshInstance3D" parent="Geometry" unique_id=1515565050]
+[node name="@MeshInstance3D@1822" type="MeshInstance3D" parent="Geometry" unique_id=1299808564]
 transform = Transform3D(0.5403023, 0, 0.84147096, 0, 1, 0, -0.84147096, 0, 0.5403023, -6.8, 0.08, 6.272789)
 material_override = SubResource("StandardMaterial3D_2g00n")
 mesh = SubResource("BoxMesh_nw6q0")
 
-[node name="@MeshInstance3D@1823" type="MeshInstance3D" parent="Geometry" unique_id=2146384324]
+[node name="@MeshInstance3D@1823" type="MeshInstance3D" parent="Geometry" unique_id=2143727798]
 transform = Transform3D(0.0707372, 0, 0.997495, 0, 1, 0, -0.997495, 0, 0.0707372, -6.4, 0.08, 6.042336)
 material_override = SubResource("StandardMaterial3D_2g00n")
 mesh = SubResource("BoxMesh_m6qoe")
 
-[node name="Slots" type="Node3D" parent="." unique_id=747641498]
+[node name="Slots" type="Node3D" parent="." unique_id=864654132]
 
-[node name="Station" type="Marker3D" parent="Slots" unique_id=9822574]
+[node name="Station" type="Marker3D" parent="Slots" unique_id=1564460513]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 
-[node name="RelayStation" type="Node3D" parent="." unique_id=2060698389 instance=ExtResource("2_ggnmr")]
+[node name="RelayStation" type="Node3D" parent="." unique_id=1771063340 instance=ExtResource("2_ggnmr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 script = ExtResource("3_egc7r")
