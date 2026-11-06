@@ -27,6 +27,8 @@ var _compass: CompassStrip
 var _selected_slot: int = 0
 var _heartbeat_timer: float = 0.0
 var _forecast_label: Label
+var _aim_label: Label
+var _charge: ProgressBar
 
 
 func _ready() -> void:
@@ -129,6 +131,15 @@ func _build() -> void:
 	_crosshair.position = Vector2(-8, -20)
 	_crosshair.visible = false
 	_root.add_child(_crosshair)
+	_aim_label = UITheme.label("", 16, Color(1, 1, 1, 0.85))
+	_aim_label.set_anchors_preset(Control.PRESET_CENTER)
+	_aim_label.position = Vector2(20, 10)
+	_root.add_child(_aim_label)
+	_charge = UITheme.bar(UITheme.ACCENT, 80, 6)
+	_charge.set_anchors_preset(Control.PRESET_CENTER)
+	_charge.position = Vector2(-40, 30)
+	_charge.visible = false
+	_root.add_child(_charge)
 	_prompt = UITheme.label("", 22, UITheme.INK)
 	_prompt.set_anchors_preset(Control.PRESET_CENTER)
 	_prompt.position = Vector2(-300, 80)
@@ -269,6 +280,16 @@ func _process(delta: float) -> void:
 	_storm_icon.modulate = _storm_icon.modulate.lerp(Color.WHITE, clampf(delta * 3.0, 0.0, 1.0))
 	if courier and is_instance_valid(courier):
 		_crosshair.visible = bool(courier.get("aiming"))
+		var combat: Node = courier.get("combat")
+		if _crosshair.visible and combat:
+			var t: String = combat.current_throwable()
+			_aim_label.text = ("Throw: %s x%d" % [ItemDB.display_name(t), Game.courier.inventory.count_of(t)]) if t != "" else "Nothing to throw"
+		else:
+			_aim_label.text = ""
+		var ch: float = combat.charge_ratio() if combat else 0.0
+		_charge.visible = ch > 0.25
+		_charge.value = ch * 100.0
+		_charge.modulate = Color(1.4, 1.2, 0.6) if ch >= 1.0 else Color.WHITE
 		var d: CourierData = Game.courier
 		if d and d.max_hp > 0.0:
 			var low := clampf(1.0 - d.hp / (d.max_hp * 0.3), 0.0, 1.0) if d.hp > 0.0 else 0.0

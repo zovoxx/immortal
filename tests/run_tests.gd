@@ -29,6 +29,7 @@ func _initialize() -> void:
 			only = a.substr(7)
 	# isolate save files from the player's real saves
 	root.get_node("/root/Save").set("save_path", "user://test_save.json")
+	root.get_node("/root/Settings").set("path", "user://test_settings.json")
 	print("=== RELAY tests ===")
 	for path in SUITES:
 		if not ResourceLoader.exists(path):
@@ -51,6 +52,7 @@ func _initialize() -> void:
 		if suite is Node:
 			(suite as Node).queue_free()
 	root.get_node("/root/Save").call("delete_save")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path("user://test_settings.json"))
 	print("=== %d passed, %d failed ===" % [passed, failed])
 	for f in failures:
 		print("  FAILED: ", f)

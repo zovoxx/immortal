@@ -13,6 +13,8 @@ func _ready() -> void:
 	Game.is_running = false
 	get_tree().paused = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	Audio.set_loop_volume(Audio.music_player, 0.5)
+	Audio.set_loop_volume(Audio.rain_player, 0.0)
 	var bg := ColorRect.new()
 	bg.color = Color(0.07, 0.06, 0.05)
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)

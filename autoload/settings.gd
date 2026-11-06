@@ -5,7 +5,7 @@ signal changed()
 
 enum Quality { LOW, MEDIUM, HIGH }
 
-const PATH := "user://relay_settings.json"
+var path: String = "user://relay_settings.json"
 
 var mouse_sensitivity: float = 0.25
 var gamepad_sensitivity: float = 3.0
@@ -29,9 +29,9 @@ func _ready() -> void:
 
 
 func load_settings() -> void:
-	if not FileAccess.file_exists(PATH):
+	if not FileAccess.file_exists(path):
 		return
-	var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(PATH))
+	var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
 	if not d is Dictionary:
 		return
 	mouse_sensitivity = float(d.get("mouse_sensitivity", mouse_sensitivity))
@@ -55,7 +55,7 @@ func save_settings() -> void:
 		"master_volume": master_volume, "music_volume": music_volume, "sfx_volume": sfx_volume,
 		"fullscreen": fullscreen, "bindings": bindings,
 	}
-	var f := FileAccess.open(PATH, FileAccess.WRITE)
+	var f := FileAccess.open(path, FileAccess.WRITE)
 	if f:
 		f.store_string(JSON.stringify(d, "\t"))
 	changed.emit()

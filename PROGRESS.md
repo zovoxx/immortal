@@ -62,3 +62,9 @@ Engine: Godot 4.7.2 stable (Linux x86_64), Jolt Physics.
 - Momentum: +1 per station reached without dying (max 5): 2 = +5% speed, 3 = better loot, 5 = Fast Courier (hidden shortcuts revealed, par-time material bonus). Death resets it.
 - The Message: 8 fragments (`world/message_fragments.gd`), Seal Breaks card every 25 relays, Message page in the menus.
 - Tests: save/load full round-trip (zone, lineage, corpses, stash, upgrades, tolls, caches, fragments), upgrades/kennel, momentum, fragments, stash persistence, station menu smoke.
+
+### Phase 9 — UI, audio, settings, save, polish (done)
+- HUD: health, stamina (fades when unchanged), carry slots + pouch + load penalty, compass strip (next relay, last corpse, howl/bell/lightning/sound alerts), momentum pips, zone + biome + Long Road +N, storm icon, Signal Mirror forecast, interaction prompt, crosshair + throwable label, charge bar, damage flash, low-HP vignette + heartbeat.
+- Menus: main (Continue/New Road/Roll/Message/Settings/Test Course/Quit), pause, death card, station, loot, message popup, Roll of the Fallen, the Message, settings (sensitivity, invert Y, FOV, Low/Medium/High, 3 volumes, fullscreen, rebinding KB+pad with reset).
+- Audio: all sounds procedurally generated (`autoload/audio.gd`), overridable by dropping files into `res://audio/sfx/`; Master/Music/SFX buses; wind loop rises with speed/storm, rain loop, music drone.
+- Save: JSON in user:// on station activation, death, rest, upgrades, pause->menu/quit and window close.

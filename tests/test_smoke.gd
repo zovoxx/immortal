@@ -101,3 +101,74 @@ func test_station_menu_rest_and_stash() -> void:
 	scene.queue_free()
 	runner.current_scene = null
 	await frames(3)
+
+
+func test_menus_and_settings() -> void:
+	var log: Object = _logger()
+	log.errors.clear()
+	Game.new_road(31)
+	Game.handle_death("tested", 4, Vector3.ZERO)
+	Game.respawn()
+	Game.fragments = [0, 1]
+	for path in ["res://ui/main_menu.tscn", "res://ui/roll_of_fallen.tscn", "res://ui/message_page.tscn", "res://ui/settings_menu.tscn"]:
+		var n: Node = load(path).instantiate()
+		runner.root.add_child(n)
+		await frames(3)
+		n.queue_free()
+		await frames(1)
+	check(log.errors.is_empty(), "menus build without errors: %s" % str(log.errors.slice(0, 3)))
+	# rebinding
+	var ev := InputEventKey.new()
+	ev.physical_keycode = KEY_J
+	Settings.rebind("jump", ev)
+	var has_j := false
+	var has_pad := false
+	for e in InputMap.action_get_events("jump"):
+		has_j = has_j or (e is InputEventKey and e.physical_keycode == KEY_J)
+		has_pad = has_pad or e is InputEventJoypadButton
+	check(has_j, "jump rebound to J")
+	check(has_pad, "gamepad binding kept")
+	eq(Settings.binding_label("jump", false), "J", "label shows the new key")
+	Settings.reset_bindings()
+	eq(Settings.binding_label("jump", false), "Space", "reset restores Space")
+	# graphics presets
+	var env := Environment.new()
+	var sun := DirectionalLight3D.new()
+	var old_q := Settings.quality
+	Settings.quality = Settings.Quality.LOW
+	Settings.apply_graphics(env, sun, runner.root)
+	check(not sun.shadow_enabled and not env.ssao_enabled and not env.volumetric_fog_enabled, "Low: no shadows, SSAO or volumetric fog")
+	check(runner.root.scaling_3d_scale < 0.7, "Low: lower render scale")
+	Settings.quality = Settings.Quality.HIGH
+	Settings.apply_graphics(env, sun, runner.root)
+	check(sun.shadow_enabled and env.ssao_enabled, "High: shadows + SSAO")
+	Settings.quality = old_q
+	Settings.apply_graphics(env, sun, runner.root)
+	sun.free()
+	# every action has keyboard and gamepad bindings (except debug)
+	for a in InputDefaults.ACTIONS:
+		if String(a).begins_with("debug") or String(a).begins_with("look"):
+			continue
+		var kb := false
+		var pad := false
+		for e in InputMap.action_get_events(a):
+			kb = kb or e is InputEventKey or e is InputEventMouseButton
+			pad = pad or e is InputEventJoypadButton or e is InputEventJoypadMotion
+		check(kb, "%s has a keyboard/mouse binding" % a)
+		check(pad or a == "walk", "%s has a gamepad binding" % a)
+
+
+func test_pause_menu_in_world() -> void:
+	Game.new_road(32)
+	var world: Node = load("res://world/game_world.tscn").instantiate()
+	runner.root.add_child(world)
+	runner.current_scene = world
+	await frames(5)
+	var pm: Node = world.find_children("*", "CanvasLayer", false, false).filter(func(n): return n.has_method("open") and n.has_method("close"))[0]
+	pm.open()
+	check(runner.paused, "pause menu pauses the game")
+	pm.close()
+	check(not runner.paused, "resume unpauses")
+	world.queue_free()
+	runner.current_scene = null
+	await frames(3)

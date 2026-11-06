@@ -61,6 +61,7 @@ func _ready() -> void:
 	respawn_courier()
 	env_ctrl.set_biome(BiomeDB.for_zone(zone), true)
 	Events.zone_entered.emit(zone)
+	Audio.set_loop_volume(Audio.music_player, 0.3)
 	if DisplayServer.get_name() != "headless":
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -157,6 +158,11 @@ func current_zone_instance() -> ZoneInstance:
 
 func save_now() -> void:
 	Save.save_game()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and Game.is_running:
+		Save.save_game()
 
 
 ## World position of a corpse even if its zone isn't loaded.
