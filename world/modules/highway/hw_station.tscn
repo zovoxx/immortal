@@ -1,0 +1,101 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://world/zone_gen/zone_module.gd" id="1_bp5r8"]
+[ext_resource type="PackedScene" path="res://world/station/relay_station.tscn" id="2_td6qw"]
+[ext_resource type="Script" path="res://world/station/relay_station.gd" id="3_2ag7p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ilbbh"]
+albedo_color = Color(0.36, 0.35, 0.33, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_cfhwx"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h5dna"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_31occ"]
+albedo_color = Color(0.2, 0.2, 0.21, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_fx4oo"]
+size = Vector3(6, 0.1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jvmjc"]
+size = Vector3(6, 0.1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yrxod"]
+albedo_color = Color(0.42, 0.33, 0.3, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_8vty7"]
+size = Vector3(1.9, 1.1, 4.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xf1d2"]
+size = Vector3(1.9, 1.1, 4.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6kunb"]
+albedo_color = Color(0.315, 0.2475, 0.22500001, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ei3b"]
+size = Vector3(1.6, 0.6, 2)
+
+[node name="HwStation" type="Node3D" unique_id=1330193853]
+script = ExtResource("1_bp5r8")
+module_id = "hw_station"
+tags = PackedStringArray("station")
+
+[node name="Entry" type="Marker3D" parent="." unique_id=1185425899]
+
+[node name="Exit" type="Marker3D" parent="." unique_id=1136204314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+
+[node name="Geometry" type="Node3D" parent="." unique_id=1483159694]
+
+[node name="@StaticBody3D@1004" type="StaticBody3D" parent="Geometry" unique_id=819216982]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 10)
+collision_mask = 0
+
+[node name="@MeshInstance3D@1005" type="MeshInstance3D" parent="Geometry/@StaticBody3D@1004" unique_id=143038262]
+material_override = SubResource("StandardMaterial3D_ilbbh")
+mesh = SubResource("BoxMesh_cfhwx")
+
+[node name="@CollisionShape3D@1006" type="CollisionShape3D" parent="Geometry/@StaticBody3D@1004" unique_id=1810730630]
+shape = SubResource("BoxShape3D_h5dna")
+
+[node name="@StaticBody3D@1007" type="StaticBody3D" parent="Geometry" unique_id=838354026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 10)
+collision_mask = 0
+
+[node name="@MeshInstance3D@1008" type="MeshInstance3D" parent="Geometry/@StaticBody3D@1007" unique_id=1454604094]
+material_override = SubResource("StandardMaterial3D_31occ")
+mesh = SubResource("BoxMesh_fx4oo")
+
+[node name="@CollisionShape3D@1009" type="CollisionShape3D" parent="Geometry/@StaticBody3D@1007" unique_id=128618285]
+shape = SubResource("BoxShape3D_jvmjc")
+
+[node name="@StaticBody3D@1010" type="StaticBody3D" parent="Geometry" unique_id=1652509005 groups=["surface_metal"]]
+transform = Transform3D(0.9553365, 0, 0.29552022, 0, 1, 0, -0.29552022, 0, 0.9553365, -7, 0.55, 14)
+collision_mask = 0
+
+[node name="@MeshInstance3D@1011" type="MeshInstance3D" parent="Geometry/@StaticBody3D@1010" unique_id=1848638834]
+material_override = SubResource("StandardMaterial3D_yrxod")
+mesh = SubResource("BoxMesh_8vty7")
+
+[node name="@CollisionShape3D@1012" type="CollisionShape3D" parent="Geometry/@StaticBody3D@1010" unique_id=314821890]
+shape = SubResource("BoxShape3D_xf1d2")
+
+[node name="@MeshInstance3D@1013" type="MeshInstance3D" parent="Geometry/@StaticBody3D@1010" unique_id=1451215481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.3)
+material_override = SubResource("StandardMaterial3D_6kunb")
+mesh = SubResource("BoxMesh_7ei3b")
+
+[node name="Slots" type="Node3D" parent="." unique_id=2095850862]
+
+[node name="Station" type="Marker3D" parent="Slots" unique_id=560447213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+
+[node name="RelayStation" type="Node3D" parent="." unique_id=1106197498 instance=ExtResource("2_td6qw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+script = ExtResource("3_2ag7p")

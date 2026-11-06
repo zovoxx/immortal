@@ -46,7 +46,7 @@ func test_twenty_zones_connected_no_overlap() -> void:
 
 func test_zone_guarantees() -> void:
 	ZoneGenerator.clear_cache()
-	for z in 40:
+	for z in 60:
 		var l := ZoneGenerator.layout(31337, z)
 		check(not l.end_station().is_empty(), "zone %d has an end station" % z)
 		check(l.shelters.size() >= 1, "zone %d has a shelter" % z)
@@ -115,3 +115,76 @@ func test_streaming_and_rebase() -> void:
 	world.queue_free()
 	runner.current_scene = null
 	await frames(3)
+
+
+
+func test_biomes_cycle_and_loop() -> void:
+	eq(BiomeDB.count(), 5, "five biomes")
+	var ids := []
+	for i in 5:
+		var b := BiomeDB.get_biome(i)
+		check(b != null and b.modules.size() >= 6, "biome %d has 6+ modules" % i)
+		check(b.station_module != "", "biome %d has a station module" % i)
+		ids.append(b.id)
+		var tags := {}
+		for p in b.modules:
+			for t in ModuleLibrary.info(p).tags:
+				tags[t] = true
+		check(tags.has("shelter") and tags.has("climb"), "biome %s has shelter + climb modules" % b.id)
+		var has_l := false
+		var has_r := false
+		for p in b.modules:
+			var inf := ModuleLibrary.info(p)
+			has_l = has_l or int(inf.exit_dir) == ZoneModule.Exit.LEFT
+			has_r = has_r or int(inf.exit_dir) == ZoneModule.Exit.RIGHT
+		check(has_l and has_r, "biome %s has left and right bends" % b.id)
+	eq(ids, ["greywood", "highway", "plains", "floating", "desert"], "biome order")
+	eq(BiomeDB.for_zone(0).id, "greywood", "zones 0-9: Greywood")
+	eq(BiomeDB.for_zone(10).id, "highway", "zones 10-19: Highway")
+	eq(BiomeDB.for_zone(49).id, "desert", "zone 49: Salt Desert")
+	eq(BiomeDB.for_zone(50).id, "greywood", "zone 50 loops back to Greywood")
+	eq(Game.loop_index(49), 0, "no loop before zone 50")
+	eq(Game.loop_index(50), 1, "Long Road +1 from zone 50")
+	var colors := {}
+	for i in 5:
+		colors[BiomeDB.get_biome(i).ground_color.to_html()] = true
+	eq(colors.size(), 5, "each biome has a distinct palette")
+
+
+func test_difficulty_increases() -> void:
+	var prev_g := 0
+	var prev_hp := 0.0
+	var prev_storm := 0.0
+	var prev_toll := 0
+	var prev_loot := 99.0
+	for z in [0, 5, 10, 20, 30, 49]:
+		var g := Difficulty.enemy_groups(z)
+		var hp := Difficulty.enemy_hp_mult(z)
+		var toll := Difficulty.toll_price(z)
+		check(g >= prev_g, "enemy groups never decrease (zone %d)" % z)
+		check(hp >= prev_hp, "enemy HP never decreases (zone %d)" % z)
+		check(toll >= prev_toll, "toll price never decreases (zone %d)" % z)
+		prev_g = g
+		prev_hp = hp
+		prev_toll = toll
+	check(Difficulty.enemy_groups(40) > Difficulty.enemy_groups(0), "more enemy groups later")
+	check(Difficulty.enemy_hp_mult(40) > Difficulty.enemy_hp_mult(0), "tougher enemies later")
+	check(Difficulty.toll_price(45) > Difficulty.toll_price(0), "tolls cost more later")
+	# storm chance is biome-weighted, compare within the same biome
+	check(Difficulty.storm_chance(9) > Difficulty.storm_chance(0), "storms more likely deeper in a biome")
+	check(Difficulty.storm_chance(55) > Difficulty.storm_chance(5), "Long Road +1: more storms")
+	check(Difficulty.loot_mult(55) < Difficulty.loot_mult(5), "Long Road +1: less loot")
+	check(Difficulty.enemy_groups(55) > Difficulty.enemy_groups(5), "Long Road +1: more enemies")
+	check(Difficulty.storm_chance(25) > Difficulty.storm_chance(15), "Storm Plains storm more than the Highway")
+
+
+func test_all_biome_zones_build() -> void:
+	ZoneGenerator.clear_cache()
+	Game.new_road(3)
+	for z in [12, 25, 33, 44, 51]:
+		var l := ZoneGenerator.layout(3, z)
+		var inst := ZoneInstance.create(l)
+		await add(inst)
+		check(inst.end_station() != null, "zone %d (%s) builds with a station" % [z, inst.biome.id])
+		inst.queue_free()
+		await frames(1)

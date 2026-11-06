@@ -410,6 +410,10 @@ func _move(delta: float) -> void:
 			dir = dir.normalized()
 			hv = dir * current_speed()
 			face_dir(dir, delta)
+			if is_on_floor() and not _ground_ahead(dir):
+				hv = Vector3.ZERO
+				if state in [State.PATROL, State.SEARCH, State.FLEE]:
+					_has_move_target = false
 	_custom_velocity(delta, hv)
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -421,6 +425,13 @@ func _move(delta: float) -> void:
 		_stuck_time += delta
 	else:
 		_stuck_time = maxf(_stuck_time - delta, 0.0)
+
+
+## Never walk off ledges into the void or a chasm (drops deeper than 3 m).
+func _ground_ahead(dir: Vector3) -> bool:
+	var from := global_position + dir * (body_radius + 0.6) + Vector3.UP * 0.6
+	var q := PhysicsRayQueryParameters3D.create(from, from + Vector3.DOWN * 3.6, Geo.LAYER_WORLD, [get_rid()])
+	return not get_world_3d().direct_space_state.intersect_ray(q).is_empty()
 
 
 ## Subclasses can override to blend (e.g. lunges, riders' inertia).
@@ -476,7 +487,9 @@ func stun(seconds: float = 2.0) -> void:
 		_state_time = 2.0 - seconds
 
 
-func die() -> void:
+func die(_cause: String = "") -> void:
+	if state == State.DEAD:
+		return
 	_enter(State.DEAD)
 	collision_layer = 0
 	collision_mask = Geo.LAYER_WORLD

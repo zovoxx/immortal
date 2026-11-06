@@ -9,7 +9,7 @@ Engine: Godot 4.7.2 stable (Linux x86_64), Jolt Physics.
 - [x] Phase 4 — Enemies part 1
 - [x] Phase 5 — Enemies part 2 and combat
 - [x] Phase 6 — Weather and day/night
-- [ ] Phase 7 — Biomes and difficulty
+- [x] Phase 7 — Biomes and difficulty
 - [ ] Phase 8 — Stations, upgrades, momentum, Message
 - [ ] Phase 9 — UI, audio, settings, save, polish
 - [ ] Phase 10 — Debug tools, balancing, export
@@ -50,3 +50,9 @@ Engine: Godot 4.7.2 stable (Linux x86_64), Jolt Physics.
 - `world/weather/weather_manager.gd`: seeded storm roll per zone (Difficulty.storm_chance x biome), a storm front that starts ~70 m behind the courier and advances along the zone path (visible curtain `storm_front.tscn`), intensity by distance to the front, rain particles + low visibility, lightning on the highest exposed point near the courier with a 1.5 s flicker + crackle warning, wind gusts that push mid-air, flash floods (WaterVolumes rise) in flood biomes, dust storms (very low visibility, scent disabled). Shelters/stations block lightning and wind.
 - `world/environment_controller.gd`: biome palette blending, 12-minute day/night (sun/moon, sky, fog, ambient), storm/dust darkening, lightning flash, Night-eyed vision (clear nights, glare + blur by day).
 - Night: enemy sight x0.55, hound scent x1.5 (Perception).
+
+### Phase 7 — Biomes and difficulty (done)
+- 5 biomes (`world/biomes/*.tres`) with distinct palettes, edge styles, enemy weights, storm multipliers and hazards; 8-11 modules each + a station module (`tools/builders/biome_*.gd` -> `world/modules/<biome>/`):
+  - Greywood Forest (streams with flash floods, hounds), Ruined Highway (cars to vault, overpass climb, tunnel shelter, watchtower slots), Storm Plains (open ground for riders, lone trees/hedges that crash them, windmill lightning rod, 2.6x storms, creek floods), Floating Ruins (platforms over a void with a kill volume, wall-run gap, spire climb, ambient wind gusts), Salt Desert (white glare x1.8, dust storms, extra scavengers, a single shelter type).
+- Difficulty (`world/zone_gen/difficulty_curves.tres`): enemy groups, HP, damage, storm chance, toll price rise with zone; loot falls. Long Road +N every 50 zones adds per-loop terms (shown on the HUD).
+- Enemies never walk off ledges; anything falling into the void dies.

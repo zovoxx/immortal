@@ -14,6 +14,8 @@ const SCRIPTS := {
 @export var max_corpse_scavengers: int = 3
 ## Seconds after a death before a scavenger arrives at the new corpse.
 @export var new_corpse_scavenger_delay: float = 40.0
+## Extra wandering scavengers per Salt Desert zone.
+@export var desert_extra_scavengers: int = 2
 var enabled: bool = true
 
 
@@ -35,6 +37,11 @@ func populate_zone(zone: ZoneInstance) -> void:
 	for i in n:
 		var c: CorpseData = with_loot[i % with_loot.size()]
 		_spawn_scavenger_near(zone, c.local_pos, rng)
+	# Salt Desert: scavengers everywhere
+	if zone.biome and zone.biome.id == "desert":
+		for i in desert_extra_scavengers + l.loop:
+			var p: Vector3 = l.path_points[rng.randi_range(4, l.path_points.size() - 2)]
+			spawn(zone, "scavenger", Transform3D(Basis(), p + Vector3(rng.randf_range(-5, 5), 0, rng.randf_range(-5, 5))))
 
 
 func spawn_feature(zone: ZoneInstance, f: Dictionary) -> Array:

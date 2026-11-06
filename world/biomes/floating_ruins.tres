@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Biome" format=3]
+
+[ext_resource type="Script" path="res://world/biomes/biome.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "floating"
+display_name = "Floating Ruins"
+ground_color = Color(0.5, 0.48, 0.55, 1)
+path_color = Color(0.62, 0.6, 0.66, 1)
+rock_color = Color(0.55, 0.52, 0.6, 1)
+foliage_color = Color(0.35, 0.45, 0.42, 1)
+trunk_color = Color(0.35, 0.3, 0.32, 1)
+accent_color = Color(0.55, 0.75, 1, 1)
+water_color = Color(0.3, 0.4, 0.55, 0.7)
+fog_color = Color(0.55, 0.58, 0.72, 1)
+sky_top = Color(0.3, 0.35, 0.6, 1)
+sky_horizon = Color(0.78, 0.74, 0.85, 1)
+sun_color = Color(0.95, 0.92, 1, 1)
+fog_density = 0.01
+ambient_energy = 0.7
+modules = Array[String](["res://world/modules/floating/fr_walkway.tscn", "res://world/modules/floating/fr_steps.tscn", "res://world/modules/floating/fr_bend_left.tscn", "res://world/modules/floating/fr_bend_right.tscn", "res://world/modules/floating/fr_spire.tscn", "res://world/modules/floating/fr_shrine.tscn", "res://world/modules/floating/fr_wallrun_gap.tscn", "res://world/modules/floating/fr_sky_bridge.tscn", "res://world/modules/floating/fr_islands.tscn"])
+station_module = "res://world/modules/floating/fr_station.tscn"
+underlay = false
+edge_style = "void"
+enemy_weights = {
+"hound": 0.5,
+"scavenger": 0.6
+}
+storm_chance_mult = 1.2
+hazard = "void"
+ambient_gusts_per_min = 4.0
