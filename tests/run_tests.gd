@@ -32,7 +32,13 @@ func _initialize() -> void:
 	for path in SUITES:
 		if not ResourceLoader.exists(path):
 			continue
-		var suite: Object = load(path).new()
+		var script: Script = load(path)
+		if script == null or not script.can_instantiate():
+			failed += 1
+			failures.append("%s: failed to load" % path)
+			print("FAIL  ", path, " — script failed to load")
+			continue
+		var suite: Object = script.new()
 		suite.set("runner", self)
 		for m in suite.get_method_list():
 			var mname: String = m.name

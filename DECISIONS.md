@@ -31,3 +31,9 @@ Decisions made without asking, with the reasoning.
 - Edge blocking (cliffs, barriers, ridges, dunes) is generated per biome by ZoneInstance on every cell side that isn't a connection, so module scenes only contain their interior.
 - Floating origin: zones are positioned relative to an integer origin cell; when the courier changes zone (or strays > 300 m from the origin) everything is shifted. Corpses/stations are zone-local so nothing drifts.
 - Station s lives at the end of zone s-1 (station 0 at the start of zone 0).
+
+## Enemies
+- Enemies are built from scripts (`Hound.new()` etc.) with their visuals in `*_model.tscn`; tunables are exported vars set in `_init()` (override them in a scene/inherited script if needed).
+- Scavenger theft only happens while the corpse's zone is loaded (no offline simulation). A scavenger alive when its zone unloads takes its loot with it.
+- A new scavenger is sent toward the newest corpse ~40 s after a respawn, so going back quickly pays off.
+- Enemies ignore a courier inside a relay station's area (stations are safe ground).
