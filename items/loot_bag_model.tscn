@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jlg1o"]
+albedo_color = Color(0.4, 0.35, 0.3, 1)
+roughness = 0.9
+
+[sub_resource type="SphereMesh" id="SphereMesh_tq37t"]
+radius = 0.3
+height = 0.48
+radial_segments = 10
+rings = 5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ulat"]
+albedo_color = Color(0.2, 0.15, 0.1, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_6830e"]
+size = Vector3(0.1, 0.15, 0.1)
+
+[node name="LootBagModel" type="Node3D" unique_id=1248665829]
+
+[node name="@MeshInstance3D@61" type="MeshInstance3D" parent="." unique_id=1043627926]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+material_override = SubResource("StandardMaterial3D_jlg1o")
+mesh = SubResource("SphereMesh_tq37t")
+
+[node name="@MeshInstance3D@62" type="MeshInstance3D" parent="." unique_id=650133987]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+material_override = SubResource("StandardMaterial3D_1ulat")
+mesh = SubResource("BoxMesh_6830e")

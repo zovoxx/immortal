@@ -1,0 +1,55 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_su76i"]
+albedo_color = Color(0.12, 0.12, 0.14, 1)
+roughness = 0.9
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8ko5h"]
+radius = 0.25
+height = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_sbeof"]
+radius = 0.18
+height = 0.36
+radial_segments = 10
+rings = 5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nuplb"]
+albedo_color = Color(0.85, 0.75, 0.3, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pf4db"]
+top_radius = 0.0
+bottom_radius = 0.06
+height = 0.25
+radial_segments = 7
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d3lea"]
+albedo_color = Color(0.45, 0.35, 0.25, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_hdhpd"]
+size = Vector3(0.5, 0.4, 0.2)
+
+[node name="ScavengerModel" type="Node3D" unique_id=347967179]
+
+[node name="@MeshInstance3D@72" type="MeshInstance3D" parent="." unique_id=1420735519]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+material_override = SubResource("StandardMaterial3D_su76i")
+mesh = SubResource("CapsuleMesh_8ko5h")
+
+[node name="@MeshInstance3D@73" type="MeshInstance3D" parent="." unique_id=1271652428]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.05)
+material_override = SubResource("StandardMaterial3D_su76i")
+mesh = SubResource("SphereMesh_sbeof")
+
+[node name="@MeshInstance3D@74" type="MeshInstance3D" parent="." unique_id=2047209427]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1.2, -0.3)
+material_override = SubResource("StandardMaterial3D_nuplb")
+mesh = SubResource("CylinderMesh_pf4db")
+
+[node name="@MeshInstance3D@75" type="MeshInstance3D" parent="." unique_id=681037357]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.25)
+material_override = SubResource("StandardMaterial3D_d3lea")
+mesh = SubResource("BoxMesh_hdhpd")

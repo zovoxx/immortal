@@ -31,6 +31,7 @@ var _forecast_label: Label
 
 func _ready() -> void:
 	layer = 5
+	add_to_group("hud")
 	_root = Control.new()
 	_root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_root.mouse_filter = Control.MOUSE_FILTER_IGNORE

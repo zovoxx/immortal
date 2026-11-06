@@ -18,6 +18,8 @@ var play_time: float = 0.0
 var zone_enter_time: float = 0.0
 ## Zone -> Array of toll ids already paid (toll-keepers stay peaceful).
 var paid_tolls: Dictionary = {}
+## Zone -> Array of loot cache ids already opened and taken from.
+var looted_caches: Dictionary = {}
 
 # --- Lineage ---
 var courier: CourierData = null
@@ -79,6 +81,7 @@ func new_road(seed_value: int = -1) -> void:
 	play_time = 0.0
 	zone_enter_time = 0.0
 	paid_tolls = {}
+	looted_caches = {}
 	courier_counter = 0
 	fallen = []
 	first_name_counts = {}
@@ -333,6 +336,17 @@ func build_upgrade(id: String, station_index: int) -> bool:
 	return true
 
 
+func is_cache_looted(zone_index: int, cache_id: String) -> bool:
+	return (looted_caches.get(str(zone_index), []) as Array).has(cache_id)
+
+
+func mark_cache_looted(zone_index: int, cache_id: String) -> void:
+	var list: Array = looted_caches.get(str(zone_index), [])
+	if not list.has(cache_id):
+		list.append(cache_id)
+	looted_caches[str(zone_index)] = list
+
+
 func is_toll_paid(zone_index: int, toll_id: String) -> bool:
 	return (paid_tolls.get(str(zone_index), []) as Array).has(toll_id)
 
@@ -356,7 +370,7 @@ func to_dict() -> Dictionary:
 		"version": 1,
 		"world_seed": world_seed, "current_zone": current_zone, "highest_zone": highest_zone,
 		"last_station": last_station, "activated_stations": activated_stations.duplicate(),
-		"time_of_day": time_of_day, "play_time": play_time, "paid_tolls": paid_tolls.duplicate(true),
+		"time_of_day": time_of_day, "play_time": play_time, "paid_tolls": paid_tolls.duplicate(true), "looted_caches": looted_caches.duplicate(true),
 		"courier": courier.to_dict() if courier else {},
 		"courier_counter": courier_counter, "fallen": fallen.duplicate(true),
 		"first_name_counts": first_name_counts.duplicate(),
@@ -380,6 +394,7 @@ func from_dict(d: Dictionary) -> void:
 	play_time = float(d.get("play_time", 0.0))
 	zone_enter_time = play_time
 	paid_tolls = d.get("paid_tolls", {})
+	looted_caches = d.get("looted_caches", {})
 	var cd: Dictionary = d.get("courier", {})
 	courier = CourierData.from_dict(cd) if not cd.is_empty() else null
 	courier_counter = int(d.get("courier_counter", 1))

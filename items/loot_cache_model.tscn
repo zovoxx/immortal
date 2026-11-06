@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_amn82"]
+albedo_color = Color(0.45, 0.32, 0.2, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_vidjl"]
+size = Vector3(1.2, 0.8, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vej22"]
+size = Vector3(1.2, 0.8, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h1dpa"]
+albedo_color = Color(0.315, 0.22399999, 0.14, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_264sy"]
+size = Vector3(1.25, 0.12, 0.85)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_52y6p"]
+albedo_color = Color(0.85, 0.7, 0.3, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_ov4sg"]
+size = Vector3(0.2, 0.2, 0.04)
+
+[node name="LootCacheModel" type="Node3D" unique_id=883258789]
+
+[node name="@StaticBody3D@56" type="StaticBody3D" parent="." unique_id=836042895]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+collision_mask = 0
+
+[node name="@MeshInstance3D@57" type="MeshInstance3D" parent="@StaticBody3D@56" unique_id=1615834101]
+material_override = SubResource("StandardMaterial3D_amn82")
+mesh = SubResource("BoxMesh_vidjl")
+
+[node name="@CollisionShape3D@58" type="CollisionShape3D" parent="@StaticBody3D@56" unique_id=1515218863]
+shape = SubResource("BoxShape3D_vej22")
+
+[node name="@MeshInstance3D@59" type="MeshInstance3D" parent="." unique_id=2085411649]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+material_override = SubResource("StandardMaterial3D_h1dpa")
+mesh = SubResource("BoxMesh_264sy")
+
+[node name="@MeshInstance3D@60" type="MeshInstance3D" parent="." unique_id=2109749394]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.41)
+material_override = SubResource("StandardMaterial3D_52y6p")
+mesh = SubResource("BoxMesh_ov4sg")

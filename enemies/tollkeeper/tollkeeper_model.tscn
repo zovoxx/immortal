@@ -1,0 +1,75 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e3hge"]
+albedo_color = Color(0.35, 0.33, 0.3, 1)
+roughness = 0.9
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_v17f2"]
+radius = 0.55
+height = 2.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jn25e"]
+albedo_color = Color(0.24499999, 0.231, 0.21000001, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_dewoo"]
+size = Vector3(0.55, 0.5, 0.55)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cs5lp"]
+albedo_color = Color(0.9, 0.7, 0.2, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_ub778"]
+size = Vector3(0.4, 0.08, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a3n3h"]
+size = Vector3(0.2, 1, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m4j4w"]
+albedo_color = Color(0.3, 0.3, 0.32, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_st1aj"]
+size = Vector3(0.45, 0.45, 0.7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_amn82"]
+albedo_color = Color(0.45, 0.32, 0.2, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_65cn7"]
+size = Vector3(0.1, 2.2, 0.1)
+
+[node name="TollkeeperModel" type="Node3D" unique_id=1325926276]
+
+[node name="@MeshInstance3D@76" type="MeshInstance3D" parent="." unique_id=704136623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0)
+material_override = SubResource("StandardMaterial3D_e3hge")
+mesh = SubResource("CapsuleMesh_v17f2")
+
+[node name="@MeshInstance3D@77" type="MeshInstance3D" parent="." unique_id=1247726776]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+material_override = SubResource("StandardMaterial3D_jn25e")
+mesh = SubResource("BoxMesh_dewoo")
+
+[node name="@MeshInstance3D@78" type="MeshInstance3D" parent="." unique_id=405245454]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, -0.28)
+material_override = SubResource("StandardMaterial3D_cs5lp")
+mesh = SubResource("BoxMesh_ub778")
+
+[node name="WeaponArm" type="Node3D" parent="." unique_id=315994976]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 1.7, 0)
+
+[node name="@MeshInstance3D@79" type="MeshInstance3D" parent="WeaponArm" unique_id=325740988]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = SubResource("StandardMaterial3D_e3hge")
+mesh = SubResource("BoxMesh_a3n3h")
+
+[node name="Mace" type="MeshInstance3D" parent="WeaponArm" unique_id=1596792630]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, -0.3)
+material_override = SubResource("StandardMaterial3D_m4j4w")
+mesh = SubResource("BoxMesh_st1aj")
+
+[node name="Post" type="MeshInstance3D" parent="." unique_id=1484656606]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.1, 0)
+material_override = SubResource("StandardMaterial3D_amn82")
+mesh = SubResource("BoxMesh_65cn7")

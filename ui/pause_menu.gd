@@ -33,7 +33,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _modal_open() -> bool:
 	for n in get_tree().get_nodes_in_group("modal_ui"):
-		if n.visible:
+		if bool(n.get("visible_modal")):
 			return true
 	return false
 

@@ -15,11 +15,16 @@ const C_TOWER := Color(0.45, 0.45, 0.5)
 
 var courier: Courier
 var hud: Node
+var station: RelayStation
 
 
 func _ready() -> void:
 	_build_environment()
 	_build_course()
+	station = preload("res://world/station/relay_station.tscn").instantiate()
+	station.station_index = 0
+	add_child(station)
+	station.position = Vector3(-14, 0, -12)
 	courier = COURIER_SCENE.instantiate()
 	courier.data = Game.courier
 	add_child(courier)
@@ -31,19 +36,50 @@ func _ready() -> void:
 	Game.is_running = true
 	if DisplayServer.get_name() != "headless":
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	Events.courier_died.connect(_on_died)
 	add_child(preload("res://ui/pause_menu.tscn").instantiate())
+	add_child(preload("res://ui/loot_window.tscn").instantiate())
+	var flow := DeathFlow.new()
+	flow.world = self
+	add_child(flow)
+	var drop := Node3D.new()
+	drop.name = "Drops"
+	drop.add_to_group("drop_parent")
+	add_child(drop)
+	for c in Game.corpses_in_zone(0):
+		spawn_corpse_node(c)
+	# a few pickups and a cache to try carry slots
+	CourierActions.spawn_pickup(self, "bandage", 1, Vector3(-4, 0.2, -4))
+	CourierActions.spawn_pickup(self, "smoke_pot", 1, Vector3(-5, 0.2, -4))
+	CourierActions.spawn_pickup(self, "scrap", 3, Vector3(-6, 0.2, -4))
+	var cache := LootCache.new()
+	cache.cache_id = "test_cache"
+	add_child(cache)
+	cache.position = Vector3(4, 0, -4)
 
 
-func _on_died(cause: String) -> void:
-	hud.notify("Died: %s — respawning" % cause)
-	await get_tree().create_timer(2.0).timeout
-	Game.courier.hp = Game.courier.max_hp
-	courier.queue_free()
+# --- DeathFlow world interface (the test course is "zone 0" with origin at 0) ---
+func zone_of_position(_pos: Vector3) -> int:
+	return 0
+
+
+func to_zone_local(_zone: int, pos: Vector3) -> Vector3:
+	return pos
+
+
+func spawn_corpse_node(data: CorpseData) -> void:
+	var c: Corpse = preload("res://world/corpse/corpse.tscn").instantiate()
+	c.data = data
+	add_child(c)
+	c.position = data.local_pos
+
+
+func respawn_courier() -> void:
+	if is_instance_valid(courier):
+		courier.queue_free()
 	courier = COURIER_SCENE.instantiate()
 	courier.data = Game.courier
 	add_child(courier)
-	courier.global_position = Vector3(0, 0.1, -6)
+	courier.global_transform = station.spawn_transform()
 	courier.camera_rig.face_direction(Vector3.BACK)
 
 

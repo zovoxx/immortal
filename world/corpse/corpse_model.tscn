@@ -1,0 +1,52 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_luh6u"]
+albedo_color = Color(0.33, 0.28, 0.24, 1)
+roughness = 0.9
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_i10gt"]
+radius = 0.3
+height = 1.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_unane"]
+albedo_color = Color(0.5, 0.35, 0.2, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_bcdbr"]
+size = Vector3(0.45, 0.25, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_amn82"]
+albedo_color = Color(0.45, 0.32, 0.2, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_tjgkp"]
+size = Vector3(0.06, 3, 0.06)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hrq3n"]
+albedo_color = Color(0.7, 0.2, 0.15, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2anv3"]
+size = Vector3(0.9, 0.55, 0.03)
+
+[node name="CorpseModel" type="Node3D" unique_id=1795494097]
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=654387757]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.3, 0)
+material_override = SubResource("StandardMaterial3D_luh6u")
+mesh = SubResource("CapsuleMesh_i10gt")
+
+[node name="@MeshInstance3D@52" type="MeshInstance3D" parent="." unique_id=1779705910]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, -0.55)
+material_override = SubResource("StandardMaterial3D_unane")
+mesh = SubResource("BoxMesh_bcdbr")
+
+[node name="@MeshInstance3D@53" type="MeshInstance3D" parent="." unique_id=418203858]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 1.5, 0.2)
+material_override = SubResource("StandardMaterial3D_amn82")
+mesh = SubResource("BoxMesh_tjgkp")
+
+[node name="Flag" type="MeshInstance3D" parent="." unique_id=264663040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 2.7, 0.2)
+material_override = SubResource("StandardMaterial3D_hrq3n")
+mesh = SubResource("BoxMesh_2anv3")

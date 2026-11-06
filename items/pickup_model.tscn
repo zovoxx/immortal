@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2rpft"]
+albedo_color = Color(0.8, 0.7, 0.4, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_kbt6m"]
+size = Vector3(0.35, 0.3, 0.35)
+
+[node name="PickupModel" type="Node3D" unique_id=1190696994]
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1511565303]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+material_override = SubResource("StandardMaterial3D_2rpft")
+mesh = SubResource("BoxMesh_kbt6m")
