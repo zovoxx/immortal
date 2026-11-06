@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemDef" format=3]
+
+[ext_resource type="Script" path="res://items/item_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "smoke_pot"
+display_name = "Smoke Pot"
+description = "Bursts into a thick cloud that breaks line of sight."
+kind = 3
+weight = 1
+max_stack = 2
+value = 3
+color = Color(0.6, 0.6, 0.7, 1)
+throw_kind = "smoke"
+loot_weight = 1.2

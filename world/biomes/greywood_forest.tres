@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Biome" format=3]
+
+[ext_resource type="Script" path="res://world/biomes/biome.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "greywood"
+display_name = "Greywood Forest"
+ground_color = Color(0.27, 0.32, 0.24, 1)
+path_color = Color(0.42, 0.37, 0.29, 1)
+rock_color = Color(0.42, 0.43, 0.41, 1)
+foliage_color = Color(0.2, 0.32, 0.22, 1)
+trunk_color = Color(0.3, 0.24, 0.2, 1)
+accent_color = Color(0.62, 0.8, 0.55, 1)
+water_color = Color(0.22, 0.36, 0.42, 0.7)
+fog_color = Color(0.5, 0.56, 0.55, 1)
+sky_top = Color(0.33, 0.42, 0.5, 1)
+sky_horizon = Color(0.62, 0.66, 0.64, 1)
+sun_color = Color(0.95, 0.93, 0.85, 1)
+sun_energy = 0.9
+fog_density = 0.016
+ambient_energy = 0.55
+edge_style = "cliff"
+enemy_weights = {"hound": 1.0}
+storm_chance_mult = 0.8
+hazard = "flood"

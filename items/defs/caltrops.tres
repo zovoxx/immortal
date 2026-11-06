@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemDef" format=3]
+
+[ext_resource type="Script" path="res://items/item_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "caltrops"
+display_name = "Caltrops"
+description = "Scatter them to slow hunters on your trail."
+kind = 3
+weight = 1
+max_stack = 2
+value = 3
+color = Color(0.4, 0.4, 0.45, 1)
+throw_kind = "caltrops"
+throw_damage = 4.0
+loot_weight = 1.2

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemDef" format=3]
+
+[ext_resource type="Script" path="res://items/item_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "fine_blade"
+display_name = "Fine Blade"
+description = "Forged at a relay station. Sharper and faster."
+kind = 1
+weight = 1
+value = 5
+color = Color(0.75, 0.9, 1, 1)
+light_damage = 22.0
+charged_damage = 50.0
+swing_speed = 1.15
+reach = 1.5
+loot_weight = 0.15

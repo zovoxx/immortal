@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemDef" format=3]
+
+[ext_resource type="Script" path="res://items/item_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "hand_axe"
+display_name = "Hand Axe"
+description = "Heavy and slow, but it bites deep."
+kind = 1
+weight = 2
+value = 4
+color = Color(0.6, 0.45, 0.3, 1)
+light_damage = 26.0
+charged_damage = 65.0
+swing_speed = 0.75
+reach = 1.6
+loot_weight = 0.3

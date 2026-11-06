@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CourierTrait" format=3]
+
+[ext_resource type="Script" path="res://traits/trait.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "night_eyed"
+display_name = "Night-eyed"
+description = "Sees clearly at night. Bright sun is blinding."
+exclusive_group = "eyes"
+night_vision = true
+sun_glare = true

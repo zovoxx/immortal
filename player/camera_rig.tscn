@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://player/camera_rig.gd" id="1"]
+
+[node name="CameraRig" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Yaw" type="Node3D" parent="."]
+
+[node name="Pitch" type="Node3D" parent="Yaw"]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Yaw/Pitch"]
+spring_length = 4.2
+
+[node name="Camera3D" type="Camera3D" parent="Yaw/Pitch/SpringArm3D"]
+current = true
+fov = 72.0
+far = 600.0

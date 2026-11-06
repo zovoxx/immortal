@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CourierTrait" format=3]
+
+[ext_resource type="Script" path="res://traits/trait.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "iron_lunged"
+display_name = "Iron-lunged"
+description = "+40% stamina."
+stamina_mult = 1.4

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemDef" format=3]
+
+[ext_resource type="Script" path="res://items/item_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "oil"
+display_name = "Oil"
+description = "Upgrade material. Carried in the pouch."
+kind = 4
+weight = 0
+max_stack = 99
+value = 1
+color = Color(0.25, 0.2, 0.1, 1)
+loot_weight = 1.8
+loot_min = 1
+loot_max = 2

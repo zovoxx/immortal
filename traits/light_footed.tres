@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CourierTrait" format=3]
+
+[ext_resource type="Script" path="res://traits/trait.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "light_footed"
+display_name = "Light-footed"
+description = "Hounds track your scent 50% worse."
+exclusive_group = "feet"
+scent_mult = 0.5

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDef" format=3]
+
+[ext_resource type="Script" path="res://items/item_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "message"
+display_name = "The Message"
+description = "A sealed letter. It must reach the End of the Road. It cannot be dropped."
+kind = 0
+weight = 1
+value = 999
+droppable = false
+color = Color(0.95, 0.85, 0.4, 1)

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CourierTrait" format=3]
+
+[ext_resource type="Script" path="res://traits/trait.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "scarred"
+display_name = "Scarred"
+description = "Enemies hesitate 1 s before attacking, but spot you from 30% farther."
+enemy_detect_range_mult = 1.3
+enemy_attack_hesitation = 1.0
