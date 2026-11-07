@@ -1,4 +1,4 @@
-# One-shot Claude Code prompt — EMBERLINE (a successor to RELAY)
+# One-shot Claude Code prompt — LANTERNFALL (a successor to RELAY)
 
 Paste everything below the line into Claude Code in an **empty folder** on Ubuntu.
 
@@ -13,7 +13,7 @@ You are building a complete, playable 3D game from scratch in **Godot 4 (latest 
 - Write `PHASES.md` (the plan below), `DECISIONS.md` (every choice you make without asking) and `PROGRESS.md` (what each phase actually delivered). Keep all three up to date.
 
 ## 1. The game
-**EMBERLINE** is a third-person, endless, forward-moving action-parkour run. You play a **Lantern-runner** carrying a living Ember down **the Dark Road**, a chain of dead beacons. Each zone ends at a beacon. Lighting it saves your progress. When you die, your body and everything you carried stay where you fell, and the next runner of your **lineage** wakes at the last lit beacon with new random traits. They can run back and take the gear off the body, if the enemies haven't stripped it first.
+**LANTERNFALL** is a third-person, endless, forward-moving action-parkour run. You play a **Lantern-runner** carrying a living Ember down **the Dark Road**, a chain of dead beacons. Each zone ends at a beacon. Lighting it saves your progress. When you die, your body and everything you carried stay where you fell, and the next runner of your **lineage** wakes at the last lit beacon with new random traits. They can run back and take the gear off the body, if the enemies haven't stripped it first.
 
 Keep the depth and adrenaline of a tense survival run: parkour, stealth, enemies that track you, weather that hunts you, permadeath with consequences. **The two design goals for this version are:**
 1. **Clarity.** The player always knows what hit them, from where, for how much, and what they could have done instead. No death should feel unfair or confusing.
@@ -90,7 +90,7 @@ Put every parameter below in a `game_feel.tres` Resource. Settings must have sli
 - **F3 debug overlay**: FPS, seed, zone, biome, weather, Flow, enemy states drawn over the enemies, and the scent trail drawn in the world. Cheats: god mode, spawn an enemy, force a storm, teleport to a zone, skip a zone.
 - **Headless tests** at `tests/run_tests.gd`, run with `godot --headless --path . --script res://tests/run_tests.gd`. They print PASS/FAIL and exit with code 1 on any failure. Cover movement numbers, damage and i-frames, chip damage, fall preview thresholds, hit-stop timing, Flow gain and loss, bounty completion, XP and unlocks, zone generation determinism, save/load round-trips and corpse persistence.
 - **Tools.** A `tools/check_all.gd` that loads every script, scene and resource to catch parse errors. A traversal bot that walks every module of every biome from entry to exit and must pass for all of them. A screenshot tool that works under `xvfb-run`.
-- **Linux export** to `build/linux/emberline.x86_64` with the `.pck` embedded. Command-line flags `--new-run`, `--continue` and `--daily`.
+- **Linux export** to `build/linux/lanternfall.x86_64` with the `.pck` embedded. Command-line flags `--new-run`, `--continue` and `--daily`.
 
 ## 8. Phases (do all of them, in order, without stopping)
 1. Movement core + test course + camera + input
